@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmación de Registro</title>
+</head>
+<body>
+    <p>Hola {{ user.get_full_name }},</p>
+    <p>Gracias por registrarte en nuestro sitio. Por favor, confirma tu dirección de correo electrónico haciendo clic en el siguiente enlace:</p>
+    <p><a href="{{ activate_url }}">Confirmar Email</a></p>
+    <p>Si no te registraste en nuestro sitio, ignora este correo.</p>
+</body>
+</html>
