@@ -11,14 +11,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 DOMAIN = os.environ.get('DOMAIN')
 
 ALLOWED_HOSTS = [
     ".electroferreriaccaj.com",
     "electroferreriaccaj.com",
+    "tienda-frontend-tau.vercel.app",
     "www.electroferreriaccaj.com",
+    "tiendabackend-v1xz.onrender.com",
     "127.0.0.1",
     "localhost",
 ]
@@ -109,6 +111,8 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
+    'https://tienda-frontend-tau.vercel.app',
+    'https://tiendabackend-v1xz.onrender.com',
     'https://vudera.com',
     'https://electroferreriaccaj.com',
 ]
@@ -118,6 +122,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
+    'https://tienda-frontend-tau.vercel.app',
+    'https://tiendabackend-v1xz.onrender.com',
     'https://vudera.com',
     'https://electroferreriaccaj.com',
 ]
