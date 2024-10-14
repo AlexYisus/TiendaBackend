@@ -2,6 +2,9 @@ from pathlib import Path
 import os
 import environ
 from datetime import timedelta
+from django.utils import translation
+from djoser.email import ActivationEmail
+
 env=environ.Env()
 environ.Env.read_env()
 ENVIROMENT = env
@@ -232,6 +235,12 @@ DJOSER = {
         'activation': 'apps.user.emails.CustomActivationEmail', 
     },
 }
+
+class CustomActivationEmail(ActivationEmail):
+    def send(self, to, *args, **kwargs):
+        translation.activate('es')  # Forzar idioma español
+        super().send(to, *args, **kwargs)
+        translation.deactivate()
 
 BT_ENVIRONMENT = os.environ.get('BT_ENVIRONMENT')
 BT_MERCHANT_ID = os.environ.get('BT_MERCHANT_ID')
