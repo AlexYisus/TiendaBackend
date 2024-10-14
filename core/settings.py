@@ -228,6 +228,9 @@ DJOSER = {
         'current_user': 'apps.user.serializers.UserCreateSerializer',
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
     },
+    'EMAIL': {
+        'activation': 'apps.user.emails.CustomActivationEmail', 
+    },
 }
 
 BT_ENVIRONMENT = os.environ.get('BT_ENVIRONMENT')
