@@ -240,8 +240,8 @@ AUTH_USER_MODEL="user.UserAccount"
 EMAIL_BACKEND='anymail.backends.brevo.EmailBackend'
 
 # if not DEBUG:
-DEFAULT_FROM_EMAIL = 'alextaraguay20@gmail.com'  # Cambia esto por tu correo electrónico desde el cual enviarás los correos
-EMAIL_USE_TLS = True  # Recomendado para la mayoría de los proveedores de correo
+DEFAULT_FROM_EMAIL = 'alextaraguay20@gmail.com'  
+EMAIL_USE_TLS = True  
 
 # RESEND_API_KEY="re_QuLo9EY2_MWKpL82DFNaU3yasrBgbm7vn"
 
