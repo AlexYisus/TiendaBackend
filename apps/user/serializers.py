@@ -4,10 +4,10 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class UserCreateSerializer(BaseUserCreateSerializer):
+class UserCreateSerializer(BaseUserCreateSerializer):#validación de datos
     class Meta(BaseUserCreateSerializer.Meta):
         model = User
-        fields = (
+        fields = (#Djoser procesa los datos
             'id',
             'email',
             'first_name',

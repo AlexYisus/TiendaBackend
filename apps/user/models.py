@@ -4,7 +4,7 @@ import os
 from apps.cart.models import Cart
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):#crear ususarios
         if not email:
             raise ValueError('Users must have an email address')
         
@@ -14,7 +14,7 @@ class UserAccountManager(BaseUserManager):
         user.set_password(password)
         user.save()
 
-        shopping_cart = Cart.objects.create(user=user)
+        shopping_cart = Cart.objects.create(user=user)#carrito de compras con usuario
         shopping_cart.save()
         
         return user
@@ -31,7 +31,7 @@ class UserAccountManager(BaseUserManager):
 
         return user
 
-class UserAccount(AbstractBaseUser, PermissionsMixin):
+class UserAccount(AbstractBaseUser, PermissionsMixin):#Djosr se encarga de los endpoints para el registro.
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

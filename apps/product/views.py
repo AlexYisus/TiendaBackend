@@ -45,7 +45,7 @@ class ListProductsView(APIView):
         limit = request.query_params.get('limit')
 
         if not limit:
-            limit = 6
+            limit = 10
         
         try:
             limit = int(limit)
@@ -55,7 +55,7 @@ class ListProductsView(APIView):
                 status=status.HTTP_404_NOT_FOUND)
         
         if limit <= 0:
-            limit = 6
+            limit = 10
         
         if order == 'desc':
             sortBy = '-' + sortBy
