@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from apps.product.models import Product
+from .models import PDFFile
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'compare_price',
@@ -12,3 +13,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 admin.site.register(Product, ProductAdmin)
+
+class PDFFileAdmin(admin.ModelAdmin):
+    list_display = ('product', 'file', 'uploaded_at')
+    search_fields = ('product__name',)
+
+admin.site.register(PDFFile)
