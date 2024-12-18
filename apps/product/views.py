@@ -6,8 +6,6 @@ from apps.product.models import Product
 from apps.product.serializers import ProductSerializer
 from apps.category.models import Category
 
-from .models import UploadedPDF
-from rest_framework.parsers import MultiPartParser, FormParser
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 from .models import PDFFile
