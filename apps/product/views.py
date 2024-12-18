@@ -6,6 +6,9 @@ from apps.product.models import Product
 from apps.product.serializers import ProductSerializer
 from apps.category.models import Category
 
+from .models import UploadedPDF
+from rest_framework.parsers import MultiPartParser, FormParser
+
 from django.db.models import Q
 
 #Vista Producto
@@ -294,3 +297,13 @@ class ListBySearchView(APIView):
             return Response(
                 {'error': 'No products found'},
                 status=status.HTTP_200_OK)
+        
+class UploadPDFView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+        file = request.data.get('file')
+        if file:
+            pdf = UploadedPDF.objects.create(file=file)
+            return Response({"message": "PDF uploaded successfully!", "url": pdf.file.url}, status=status.HTTP_201_CREATED)
+        return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)

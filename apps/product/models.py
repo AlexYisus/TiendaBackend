@@ -15,6 +15,8 @@ class Product(models.Model):
     quantity = models.IntegerField(default=0)
     sold = models.IntegerField(default=0)
     date_created = models.DateTimeField(default=datetime.now)
+    file = models.FileField(upload_to='pdfs/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def get_thumbnail(self):
         if self.photo:

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ProductDetailView, ListProductsView, ListSearchView, ListRelatedView, ListBySearchView
+from .views import ProductDetailView, ListProductsView, ListSearchView, ListRelatedView, ListBySearchView, UploadPDFView
 
 app_name="product"
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('search', ListSearchView.as_view()),
     path('related/<productId>', ListRelatedView.as_view()),
     path('by/search', ListBySearchView.as_view()),
-    ]
+    path('download-pdf/<int:pk>/', UploadPDFView.as_view()),
+    ] 
