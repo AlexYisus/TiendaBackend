@@ -8,6 +8,9 @@ from apps.category.models import Category
 
 from .models import UploadedPDF
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
+from .models import PDFFile
 
 from django.db.models import Q
 
@@ -298,12 +301,8 @@ class ListBySearchView(APIView):
                 {'error': 'No products found'},
                 status=status.HTTP_200_OK)
         
-class UploadPDFView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
-
-    def post(self, request, *args, **kwargs):
-        file = request.data.get('file')
-        if file:
-            pdf = UploadedPDF.objects.create(file=file)
-            return Response({"message": "PDF uploaded successfully!", "url": pdf.file.url}, status=status.HTTP_201_CREATED)
-        return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+def download_pdf(request, pk):
+    pdf = get_object_or_404(PDFFile, pk=pk)
+    response = FileResponse(pdf.file.open(), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{pdf.file.name}"'
+    return response
