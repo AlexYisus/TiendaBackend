@@ -1,21 +1,17 @@
 from django.contrib import admin
+from .models import Product
 
-from apps.product.models import Product
-from .models import PDFFile
-
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'compare_price',
-                    'price', 'quantity', 'sold', )
-    list_display_links = ('id', 'name', )
-    list_filter = ('category', )
-    list_editable = ('compare_price', 'price', 'quantity', )
-    search_fields = ('name', 'description', )
-    list_per_page = 25
-
-admin.site.register(Product, ProductAdmin)
-
-class PDFFileAdmin(admin.ModelAdmin):
-    list_display = ('product', 'file', 'uploaded_at')
-    search_fields = ('product__name',)
-
-admin.site.register(PDFFile)
+    list_display = ('name', 'category', 'price', 'quantity', 'sold', 'date_created')
+    list_filter = ('category', 'date_created')
+    search_fields = ('name',)
+    readonly_fields = ('get_thumbnail',)
+    fieldsets = (
+        ('General Info', {
+            'fields': ('name', 'photo', 'get_thumbnail', 'description', 'price', 'compare_price', 'category', 'quantity', 'sold', 'pdf_file')
+        }),
+        ('Dates', {
+            'fields': ('date_created',),
+        }),
+    )

@@ -1,8 +1,8 @@
 from django.db import models
 from datetime import datetime
 from apps.category.models import Category
-
 from django.conf import settings
+
 domain = settings.DOMAIN
 
 class Product(models.Model):
@@ -14,6 +14,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     sold = models.IntegerField(default=0)
+    pdf_file = models.FileField(upload_to='pdfs/%Y/%m/', blank=True, null=True)  # Nuevo campo para PDF
     date_created = models.DateTimeField(default=datetime.now)
 
     def get_thumbnail(self):
@@ -23,8 +24,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-    
-class PDFFile(models.Model):
-    title = models.CharField(max_length=255)
-    file = models.FileField(upload_to='pdfs/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)

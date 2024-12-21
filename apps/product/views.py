@@ -6,19 +6,35 @@ from apps.product.models import Product
 from apps.product.serializers import ProductSerializer
 from apps.category.models import Category
 
-from django.http import FileResponse
-from django.shortcuts import get_object_or_404
-from .models import PDFFile
-
 from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 
-#Vista Producto
+# Función para descargar el archivo PDF
+def download_pdf(request, product_id):
+    # Obtén el producto correspondiente al ID
+    product = get_object_or_404(Product, id=product_id)
+
+    # Verifica si el producto tiene un archivo PDF adjunto
+    if not product.pdf:
+        return HttpResponse(
+            {'error': 'No PDF file associated with this product'},
+            status=404
+        )
+    
+    # Prepara el archivo PDF para ser descargado
+    response = HttpResponse(product.pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{product.pdf.name}"'
+    return response
+
+
+# Vista Producto
 class ProductDetailView(APIView):
     permission_classes = (permissions.AllowAny, )
 
     def get(self, request, productId, format=None):
         try:
-            product_id=int(productId)
+            product_id = int(productId)
         except:
             return Response(
                 {'error': 'Product ID must be an integer'},
@@ -35,7 +51,8 @@ class ProductDetailView(APIView):
                 {'error': 'Product with this ID does not exist'},
                 status=status.HTTP_404_NOT_FOUND)
 
-#Listar prodcutos
+
+# Listar productos
 class ListProductsView(APIView):
     permission_classes = (permissions.AllowAny, )
 
@@ -298,9 +315,3 @@ class ListBySearchView(APIView):
             return Response(
                 {'error': 'No products found'},
                 status=status.HTTP_200_OK)
-        
-def download_pdf(request, pk):
-    pdf = get_object_or_404(PDFFile, pk=pk)
-    response = FileResponse(pdf.file.open(), content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{pdf.file.name}"'
-    return response

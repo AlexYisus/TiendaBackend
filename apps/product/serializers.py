@@ -14,6 +14,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'category',
             'quantity',
             'sold',
+            'pdf_file',
             'date_created',
             'get_thumbnail'
         ]
