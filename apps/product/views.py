@@ -5,28 +5,19 @@ from rest_framework import permissions, status
 from apps.product.models import Product
 from apps.product.serializers import ProductSerializer
 from apps.category.models import Category
-
+from django.http import FileResponse, Http404
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
 # Función para descargar el archivo PDF
-def download_pdf(request, product_id):
-    # Obtén el producto correspondiente al ID
-    product = get_object_or_404(Product, id=product_id)
-
-    # Verifica si el producto tiene un archivo PDF adjunto
-    if not product.pdf:
-        return HttpResponse(
-            {'error': 'No PDF file associated with this product'},
-            status=404
-        )
-    
-    # Prepara el archivo PDF para ser descargado
-    response = HttpResponse(product.pdf, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{product.pdf.name}"'
-    return response
-
+def download_pdf(request, id):
+    try:
+        product = get_object_or_404(Product, id=id)
+        file_path = product.pdf_file.path
+        return FileResponse(open(file_path, 'rb'), content_type='application/pdf', as_attachment=True, filename=f"{product.name}.pdf")
+    except FileNotFoundError:
+        raise Http404("El archivo no existe.")
 
 # Vista Producto
 class ProductDetailView(APIView):
